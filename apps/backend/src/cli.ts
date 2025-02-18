@@ -1,9 +1,8 @@
 import * as fs from 'fs/promises';
 import * as readline from 'readline';
-
-import { deepResearch, writeFinalReport } from './deep-research';
-import { generateFeedback } from './feedback';
-import { OutputManager } from './output-manager';
+import { deepResearch, writeFinalReport } from './services/research/deep-research';
+import { generateFeedback } from './services/research/feedback';
+import { OutputManager } from './lib/progress/output-manager';
 
 const output = new OutputManager();
 
@@ -71,7 +70,6 @@ ${followUpQuestions.map((q: string, i: number) => `Q: ${q}\nA: ${answers[i]}`).j
 `;
 
   log('\nResearching your topic...');
-
   log('\nStarting research with progress tracking...\n');
   
   const { learnings, visitedUrls } = await deepResearch({
@@ -103,4 +101,9 @@ ${followUpQuestions.map((q: string, i: number) => `Q: ${q}\nA: ${answers[i]}`).j
   rl.close();
 }
 
-run().catch(console.error);
+// Only run if called directly (not imported)
+if (import.meta.url === new URL(import.meta.url).href) {
+  run().catch(console.error);
+}
+
+export { run }; 

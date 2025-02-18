@@ -1,4 +1,4 @@
-import { ResearchProgress } from './deep-research';
+import { ResearchProgress } from '../my-monorepo/apps/backend/src/services/research/deep-research';
 
 export class OutputManager {
   private progressLines: number = 4;
